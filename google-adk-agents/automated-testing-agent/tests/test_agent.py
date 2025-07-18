@@ -1,21 +1,29 @@
 import unittest
-from unittest.mock import patch
-from io import StringIO
+from unittest.mock import MagicMock, patch
 from ..agent import AutomatedTestingAgent
 
 class TestAutomatedTestingAgent(unittest.TestCase):
 
-    def test_run(self):
-        # Create an instance of the agent
-        agent = AutomatedTestingAgent(".")
+    @patch('unittest.TestLoader')
+    def test_discover_and_run_tests(self, mock_loader):
+        # Create a mock suite
+        mock_suite = MagicMock()
 
-        # Redirect stdout to capture the output of the run method
-        with patch('sys.stdout', new=StringIO()) as fake_out:
-            agent.run()
-            output = fake_out.getvalue().strip()
+        # Configure the mock loader to return the mock suite
+        mock_loader.return_value.discover.return_value = mock_suite
 
-        # Check that the output is what we expect
-        self.assertEqual(output, "Running automated testing agent...\nAutomated testing agent finished.")
+        # Create an instance of the agent and run the test
+        agent = AutomatedTestingAgent("fake/path")
+        result = agent.discover_and_run_tests()
+
+        # Check that the loader was called with the correct path
+        mock_loader.return_value.discover.assert_called_with("fake/path")
+
+        # Check that the suite's run method was called
+        self.assertTrue(mock_suite.run.called)
+
+        # Check that the result is a TestResult instance
+        self.assertIsInstance(result, unittest.TestResult)
 
 if __name__ == '__main__':
     unittest.main()
