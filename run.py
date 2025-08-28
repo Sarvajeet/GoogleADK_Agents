@@ -59,7 +59,7 @@ async def call_agent_async(query, runner, session_id):
 async def run_example():
     runner, session_id = await setup_session_and_runner()
 
-    await call_agent_async("Create a new project based on the 'petstore.json' spec.", runner, session_id)
+    await call_agent_async("Create a new project based on the 'software_development_agent/petstore.yaml' spec.", runner, session_id)
 
 
 # --- Execute ---
