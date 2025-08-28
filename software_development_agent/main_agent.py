@@ -2,10 +2,12 @@ from dotenv import load_dotenv
 
 from google.adk.agents import LlmAgent, SequentialAgent
 
-from requirements_analyst_agent import RequirementsAnalystAgent
-from project_scaffolder_agent import ProjectScaffolderAgent
-from code_generator_agent import CodeGeneratorAgent
-from test_generator_agent import TestGeneratorAgent
+from .sub_agents.requirements_analyst import RequirementsAnalystAgent
+from .sub_agents.project_scaffolder import ProjectScaffolderAgent
+from .sub_agents.code_generator import CodeGeneratorAgent
+from .sub_agents.test_generator import TestGeneratorAgent
+from .sub_agents.documentation import DocumentationAgent
+from .sub_agents.deployment import DeploymentAgent
 
 # --- Load Environment Variables ---
 load_dotenv()
@@ -19,7 +21,9 @@ pipeline = SequentialAgent(
         RequirementsAnalystAgent,
         ProjectScaffolderAgent,
         CodeGeneratorAgent,
-        TestGeneratorAgent
+        TestGeneratorAgent,
+        DocumentationAgent,
+        DeploymentAgent
     ]
 )
 

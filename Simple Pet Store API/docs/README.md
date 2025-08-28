@@ -1,1 +1,0 @@
-# Simple Pet Store API

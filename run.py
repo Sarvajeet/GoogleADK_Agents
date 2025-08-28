@@ -1,36 +1,27 @@
 import asyncio
 import json
-import uuid
 from dotenv import load_dotenv
 
-from google.adk.agents import LlmAgent, SequentialAgent
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
 
-from requirements_analyst_agent import RequirementsAnalystAgent
-from project_scaffolder_agent import ProjectScaffolderAgent
+from software_development_agent import ChiefArchitectAgent
 
 # --- Load Environment Variables ---
 load_dotenv()
-
-# --- Define the Sequential Agent ---
-pipeline = SequentialAgent(
-    name="DevelopmentPipeline",
-    sub_agents=[RequirementsAnalystAgent, ProjectScaffolderAgent]
-)
 
 # --- Session and Runner Setup ---
 async def setup_session_and_runner():
     session_service = InMemorySessionService()
     runner = Runner(
-        agent=pipeline,
-        app_name="development_pipeline_app",
+        agent=ChiefArchitectAgent,
+        app_name="software_development_app",
         session_service=session_service,
     )
     session_id = f"session_{uuid.uuid4()}"
     await session_service.create_session(
-        app_name="development_pipeline_app",
+        app_name="software_development_app",
         user_id="user_1",
         session_id=session_id,
     )
@@ -38,7 +29,7 @@ async def setup_session_and_runner():
 
 # --- Agent Interaction Function ---
 async def call_agent_async(query, runner, session_id):
-    print(f"\n--- Running Development Pipeline ---")
+    print(f"\n--- Running Software Development Agent ---")
     print(f"Query: {query}")
 
     content = types.Content(role='user', parts=[types.Part(text=query)])
@@ -68,15 +59,13 @@ async def call_agent_async(query, runner, session_id):
 async def run_example():
     runner, session_id = await setup_session_and_runner()
 
-    with open("requirements.json", "r") as f:
-        requirements = json.load(f)
-
-    await call_agent_async(f"Analyze the following requirements: {json.dumps(requirements)}", runner, session_id)
+    await call_agent_async("Create a new project based on the 'petstore.json' spec.", runner, session_id)
 
 
 # --- Execute ---
 if __name__ == "__main__":
-    print("Executing development pipeline runner...")
+    import uuid
+    print("Executing software development agent runner...")
     try:
         asyncio.run(run_example())
     except RuntimeError as e:
@@ -84,4 +73,4 @@ if __name__ == "__main__":
             print("Info: Cannot run asyncio.run from a running event loop (e.g., Jupyter/Colab).")
         else:
             raise e
-    print("Development pipeline runner finished.")
+    print("Software development agent runner finished.")
