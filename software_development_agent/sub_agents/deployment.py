@@ -39,7 +39,7 @@ def generate_dockerfile(state: dict) -> dict:
 # --- Agent Definition ---
 DeploymentAgent = LlmAgent(
     name="DeploymentAgent",
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     tools=[generate_dockerfile],
     instruction="""You are a deployment agent. Your task is to generate a Dockerfile for the project.
     Use the `generate_dockerfile` tool to generate the Dockerfile.

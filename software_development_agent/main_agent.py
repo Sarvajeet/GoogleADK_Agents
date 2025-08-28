@@ -30,7 +30,7 @@ pipeline = SequentialAgent(
 # Define the Chief Architect Agent
 ChiefArchitectAgent = LlmAgent(
     name="ChiefArchitectAgent",
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     sub_agents=[pipeline],
     instruction="""You are the Chief Architect agent. Your task is to orchestrate the development of a new software project.
     You will use the 'DevelopmentPipeline' to manage the development process.

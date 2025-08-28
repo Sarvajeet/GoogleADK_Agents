@@ -54,7 +54,7 @@ def generate_tests(state: dict) -> dict:
 # --- Agent Definition ---
 TestGeneratorAgent = LlmAgent(
     name="TestGeneratorAgent",
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     tools=[generate_tests],
     instruction="""You are a test generator agent. Your task is to generate unit tests for the project.
     Use the `generate_tests` tool to generate the tests.

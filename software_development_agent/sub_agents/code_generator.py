@@ -44,7 +44,7 @@ def generate_code(state: dict) -> dict:
 # --- Agent Definition ---
 CodeGeneratorAgent = LlmAgent(
     name="CodeGeneratorAgent",
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     tools=[generate_code],
     instruction="""You are a code generator agent. Your task is to generate the source code for the project.
     Use the `generate_code` tool to generate the code.
