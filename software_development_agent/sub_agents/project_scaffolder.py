@@ -8,7 +8,7 @@ load_dotenv()
 
 # --- Custom File System Tools ---
 
-def create_project_structure(state: dict) -> dict:
+def create_project_structure(state: dict) -> None:
     """Creates a standard FastAPI project structure.
 
     Args:
@@ -58,7 +58,7 @@ def create_project_structure(state: dict) -> dict:
             f.write('fastapi\n')
             f.write('uvicorn[standard]\n')
 
-        return state
+        #return state
     except Exception as e:
         raise e
 
@@ -67,6 +67,7 @@ ProjectScaffolderAgent = LlmAgent(
     name="ProjectScaffolderAgent",
     model="gemini-2.5-flash",
     tools=[create_project_structure],
-    instruction="""You are a project scaffolder agent. Your task is to create a new project structure.""",
+    instruction="""You are a project scaffolder agent. Your task is to create a new project structure.
+       Use the `create_project_structure` tool to do this.""",
     description="An agent that can scaffold a new software project."
 )

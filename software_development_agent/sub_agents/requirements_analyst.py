@@ -48,7 +48,7 @@ def analyze_openapi_spec(state: dict, file_path: str) -> dict:
 # --- Agent Definition ---
 RequirementsAnalystAgent = LlmAgent(
     name="RequirementsAnalystAgent",
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     tools=[analyze_openapi_spec],
     instruction="""You are a requirements analyst agent. Your task is to analyze the user's requirements from an OpenAPI spec file.
     Use the `analyze_openapi_spec` tool to process the requirements.
