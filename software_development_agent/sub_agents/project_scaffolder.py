@@ -67,7 +67,7 @@ ProjectScaffolderAgent = LlmAgent(
     name="ProjectScaffolderAgent",
     model="gemini-2.5-flash",
     tools=[create_project_structure],
-    instruction="""You are a project scaffolder agent. Your task is to create a new project structure.
+    instruction="""You are a project scaffolder agent. Your task is to create a new project structure depending on technology stack.
        Use the `create_project_structure` tool to do this.""",
     description="An agent that can scaffold a new software project."
 )
