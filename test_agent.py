@@ -1,6 +1,4 @@
 import asyncio
-import json
-import uuid
 from dotenv import load_dotenv
 
 from google.adk.runners import Runner
@@ -17,12 +15,12 @@ async def setup_session_and_runner():
     session_service = InMemorySessionService()
     runner = Runner(
         agent=ChiefArchitectAgent,
-        app_name="software_development_app",
+        app_name="test_app",
         session_service=session_service,
     )
-    session_id = f"session_{uuid.uuid4()}"
+    session_id = "test_session"
     await session_service.create_session(
-        app_name="software_development_app",
+        app_name="test_app",
         user_id="user_1",
         session_id=session_id,
     )
@@ -30,7 +28,7 @@ async def setup_session_and_runner():
 
 # --- Agent Interaction Function ---
 async def call_agent_async(query, runner, session_id):
-    print(f"\n--- Running Software Development Agent ---")
+    print(f"\n--- Running Test Agent ---")
     print(f"Query: {query}")
 
     content = types.Content(role='user', parts=[types.Part(text=query)])
@@ -59,21 +57,12 @@ async def call_agent_async(query, runner, session_id):
 # --- Run Example ---
 async def run_example():
     runner, session_id = await setup_session_and_runner()
-
-    # FastAPI example
-    await call_agent_async("Create a new project based on the 'software_development_agent/petstore.yaml' spec using fastapi.", runner, session_id)
-
-    # # Spring Boot example
-    # # First, let's clean up the created files for the new run
-    # import shutil
-    # shutil.rmtree("Simple Pet Store API", ignore_errors=True)
-
-    # await call_agent_async("Create a new project based on the 'software_development_agent/petstore.yaml' spec using springboot.", runner, session_id)
+    await call_agent_async("Create a new project based on the 'software_development_agent/petstore.yaml' spec using springboot.", runner, session_id)
 
 
 # --- Execute ---
 if __name__ == "__main__":
-    print("Executing software development agent runner...")
+    print("Executing test agent runner...")
     try:
         asyncio.run(run_example())
     except RuntimeError as e:
@@ -81,4 +70,4 @@ if __name__ == "__main__":
             print("Info: Cannot run asyncio.run from a running event loop (e.g., Jupyter/Colab).")
         else:
             raise e
-    print("Software development agent runner finished.")
+    print("Test agent runner finished.")

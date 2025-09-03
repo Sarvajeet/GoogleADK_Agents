@@ -18,6 +18,9 @@ def generate_readme(state: dict) -> dict:
         The updated session state.
     """
     try:
+        if "generate_tests_response" in state:
+            state = state["generate_tests_response"]
+
         project_name = state.get("project_name")
         endpoints = state.get("endpoints", [])
 
@@ -37,13 +40,3 @@ def generate_readme(state: dict) -> dict:
     except Exception as e:
         raise e
 
-# --- Agent Definition ---
-DocumentationAgent = LlmAgent(
-    name="DocumentationAgent",
-    model="gemini-2.5-flash",
-    tools=[generate_readme],
-    instruction="""You are a documentation agent. Your task is to generate a README.md file for the project.
-    Use the `generate_readme` tool to generate the documentation.
-    """,
-    description="An agent that can generate project documentation."
-)
